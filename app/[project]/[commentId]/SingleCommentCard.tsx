@@ -7,6 +7,8 @@ import { formatDistanceToNow } from "date-fns"; // Optional, for formatting date
 export default async function SingleCard({ item }: any) {
   const session = await auth();
 
+  const user = item.user || { name: "Anonymous", image: "/default-avatar.png" };
+
   return (
     <div className="w-full p-3 ">
       {/* name and created at */}
@@ -14,8 +16,8 @@ export default async function SingleCard({ item }: any) {
         <div className="flex items-center sm:gap-3 gap-2">
           <Avatar className="w-6 h-6 sm:w-10 sm:h-10">
             <AvatarImage
-              src={session?.user?.image || "/default-avatar.png"}
-              alt={session?.user?.name as string}
+              src={user.image || "/default-avatar.png"}
+              alt={user.name as string}
             />
             <AvatarFallback>IN</AvatarFallback>
           </Avatar>

@@ -13,9 +13,15 @@ export default async function Discussions({ projectName }: ProjectNameProps) {
   return (
     <div className="w-full h-full lg:mt-1 mt-10">
       {message.length > 0 ? (
-        message.map((item: any) => (
-          <DiscussionCard key={item.id} item={item} projectName={projectName} />
-        ))
+        message
+          .reverse()
+          .map((item: any) => (
+            <DiscussionCard
+              key={item.id}
+              item={item}
+              projectName={projectName}
+            />
+          ))
       ) : (
         <div className="flex items-center flex-col mt-5">
           <Image src="/no.svg" alt="no discussions" width={400} height={400} />

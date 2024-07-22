@@ -7,6 +7,9 @@ export async function FetchComment(commentId: string) {
     where: {
       id: commentId,
     },
+    include: {
+      user: true,
+    },
   });
 }
 
