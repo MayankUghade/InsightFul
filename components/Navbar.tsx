@@ -11,16 +11,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function Navbar() {
   const { data: session, data: loading } = useSession();
   return (
     <div className="border-b">
       <div className="p-3 lg:container flex items-center justify-between mb-1 mt-2">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 cursor-pointer">
           <Image src="/logo.png" alt="Logo" width={40} height={40} />
           <h1 className="text-2xl font-bold">InsightFul</h1>
-        </div>
+        </Link>
         <div className="flex items-center gap-2">
           {session ? (
             <div className="flex items-center">

@@ -2,13 +2,18 @@
 
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
-export async function CreateMessage(values: any) {
+import { revalidatePath } from "next/cache";
+import { string } from "zod";
+
+export async function CreateMessage(values: any, projectname: string) {
   const session = await auth();
   const userEmail = session?.user?.email;
 
-  return prisma.message.create({
+  revalidatePath(`/${projectname}`);
+  return await prisma.message.create({
     data: {
       ...values,
+      projectname,
       userEmail,
     },
   });

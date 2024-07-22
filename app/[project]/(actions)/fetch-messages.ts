@@ -8,6 +8,7 @@ export async function FetchMessages(projectName: string) {
       name: projectName,
     },
     include: {
+      user: true,
       message: true,
     },
   });

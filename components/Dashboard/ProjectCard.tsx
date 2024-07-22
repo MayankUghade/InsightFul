@@ -41,24 +41,23 @@ export default function Card({
 
       <div className="w-full flex items-center gap-3 mt-4">
         <div className="p-2 border rounded-lg sm:w-[300px] w-full overflow-hidden text-sm text-nowrap">
-          http://localhost:3000/{cancelspace(name)}
+          http://localhost:3000/{cancelspace(name as string)}
         </div>
         <Button
           onClick={() => {
             navigator.clipboard.writeText(
-              `http://localhost:3000/${cancelspace(name)}`
+              `http://localhost:3000/${cancelspace(name as string)}`
             );
             notify();
           }}
         >
           <Copy />
         </Button>
-
-        <Button>
-          <Link href={`/${cancelspace(name)}`}>
+        <Link href={`/${cancelspace(name as string)}`}>
+          <Button>
             <ImArrowUpRight />
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
 
       <div className="mt-5 flex items-center gap-2">

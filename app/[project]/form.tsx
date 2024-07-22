@@ -36,7 +36,11 @@ const formSchema = z.object({
 
 const notify = () => toast.success("Message created successfully");
 
-export default function CreateDiscussion() {
+export default function CreateDiscussion({
+  projectname,
+}: {
+  projectname: string;
+}) {
   const [Loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,7 +52,7 @@ export default function CreateDiscussion() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    CreateMessage(values);
+    CreateMessage(values, projectname);
     console.log(values);
     form.reset();
     setLoading(false);
