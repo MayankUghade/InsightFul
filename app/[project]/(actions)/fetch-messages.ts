@@ -1,5 +1,3 @@
-"use server";
-
 import prisma from "@/lib/db";
 
 export async function FetchMessages(projectName: string) {
@@ -8,7 +6,7 @@ export async function FetchMessages(projectName: string) {
       name: projectName,
     },
     include: {
-      message: {
+      messages: {
         include: {
           user: true,
         },

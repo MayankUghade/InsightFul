@@ -13,6 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum MessageStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -22,7 +29,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   projects      Project[]
-  message       Message[]
+  messages      Message[]
   comments      Comment[]
   // Authenticator Authenticator[]
 
@@ -76,23 +83,24 @@ model Project {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   userEmail String
   name      String?   @unique
-  link      String
   createdAt DateTime  @default(now())
-  message   Message[]
+  messages  Message[]
 
   user User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
 
 model Message {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   userEmail   String?
   projectname String
   title       String
   description String
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime      @default(now())
+  status      MessageStatus @default(NEW)
   comments    Comment[]
-  user        User?     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  project     Project   @relation(fields: [projectname], references: [name], onDelete: Cascade)
+  upvotes     Upvote[]
+  user        User?         @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  project     Project       @relation(fields: [projectname], references: [name], onDelete: Cascade)
 }
 
 model Comment {
@@ -105,18 +113,12 @@ model Comment {
   user      User?    @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
 
-// // Optional for WebAuthn support
-// model Authenticator {
-//   credentialID         String  @id @map("_id")
-//   userId               String  @db.ObjectId
-//   providerAccountId    String
-//   credentialPublicKey  String
-//   counter              Int
-//   credentialDeviceType String
-//   credentialBackedUp   Boolean
-//   transports           String?
+model Upvote {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  messageId String   @db.ObjectId
+  upvote    Int      @default(0)
+  createdAt DateTime @default(now())
+  userEmail String?
 
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@unique([userId, credentialID])
-// }
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}

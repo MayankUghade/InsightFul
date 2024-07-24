@@ -25,6 +25,8 @@ import {
 import { createProject } from "../Actions/createproject";
 import { Loader2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import { RiEdit2Fill } from "react-icons/ri";
+import EditProject from "../Actions/EditProject";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,21 +34,21 @@ const formSchema = z.object({
   }),
 });
 
-const notify = () => toast.success("Project created successfully");
+const notify = () => toast.success("Project edited successfully");
 
-export default function CreateProject() {
+export default function Edit({ name, id }: { name: string; id: string }) {
   const [Loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: name,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    await createProject(values);
+    await EditProject(id, values, name);
     console.log(values);
     form.reset();
     setLoading(false);
@@ -54,17 +56,17 @@ export default function CreateProject() {
   }
 
   return (
-    <div className="mt-3">
+    <div>
       <Dialog>
         <Toaster />
         <DialogTrigger asChild>
-          <Button>Create New Project</Button>
+          <RiEdit2Fill className="text-2xl text-blue-400" />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create a New Project</DialogTitle>
+            <DialogTitle>Edit Project</DialogTitle>
             <DialogDescription>
-              Fill out the details for your new project.
+              Fill out the updated details for your project.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>

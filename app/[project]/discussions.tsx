@@ -1,14 +1,15 @@
 import Image from "next/image";
 import DiscussionCard from "./DiscussionCard";
 import { FetchMessages } from "./(actions)/fetch-messages";
+import { Fetchsingleproject } from "../Dashboard/(actions)/fetchsingleproject";
 
 interface ProjectNameProps {
   projectName: string;
 }
 
 export default async function Discussions({ projectName }: ProjectNameProps) {
-  const data = await FetchMessages(projectName);
-  const message = data?.message || [];
+  const data = await Fetchsingleproject(projectName);
+  const message = data?.messages || [];
 
   return (
     <div className="w-full h-full lg:mt-1 mt-10">

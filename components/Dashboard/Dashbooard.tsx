@@ -32,7 +32,6 @@ export default async function Dashboard() {
               id={item.id}
               userEmail={item.userEmail}
               name={item.name}
-              link={item.link}
               createdAt={item.createdAt}
             />
           ))

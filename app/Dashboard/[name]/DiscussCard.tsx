@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { BiComment } from "react-icons/bi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { auth } from "@/lib/auth";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
-import Upvote from "./upvote";
+import Upvote from "@/app/[project]/upvote";
+import { CreateTags } from "./createtags";
 import { MessageStatus } from "@prisma/client";
 
 interface DiscussionCardProps {
@@ -14,7 +14,7 @@ interface DiscussionCardProps {
     title: string;
     description: string;
     user: any;
-    status: MessageStatus;
+    status: string;
   };
   projectName: string;
 }
@@ -24,20 +24,6 @@ export default async function DiscussionCard({
   projectName,
 }: DiscussionCardProps) {
   const user = item.user || { name: "Anonymous", image: "/default-avatar.png" };
-  const StatusDisplay = (status: MessageStatus) => {
-    switch (status) {
-      case "NEW":
-        return <h1>⭐ New</h1>;
-      case "COMPLETED":
-        return <h1>✅ Completed</h1>;
-      case "IN_PROGRESS":
-        return <h1>💻 In-Progress</h1>;
-      case "REJECTED":
-        return <h1>❌ Rejected</h1>;
-      default:
-        return <h1>Unknown Status</h1>;
-    }
-  };
 
   return (
     <div className="w-full p-3 border rounded-lg mb-3">
@@ -51,7 +37,11 @@ export default async function DiscussionCard({
           <h2 className="text-sm font-medium sm:text-lg">{user.name}</h2>
         </div>
 
-        {StatusDisplay(item.status)}
+        <CreateTags
+          id={item.id}
+          projectName={projectName}
+          currentstatus={item.status as MessageStatus}
+        />
       </div>
 
       {/* Title description and upvote button */}
@@ -71,8 +61,9 @@ export default async function DiscussionCard({
             <h1 className="sm:text-sm">Comment</h1>
           </Button>
         </Link>
+
         <h1 className="text-sm sm:text-xs">
-          Created at:{" "}
+          Created:{" "}
           {formatDistanceToNow(new Date(item.createdAt), { addSuffix: true })}
         </h1>
       </div>
