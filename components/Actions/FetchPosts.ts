@@ -10,5 +10,19 @@ export async function Fetchposts() {
     where: {
       userEmail,
     },
+    include: {
+      messages: true,
+    },
+  });
+}
+
+export async function Allmessages(id: string) {
+  return await prisma.project.findMany({
+    where: {
+      id,
+    },
+    include: {
+      messages: true,
+    },
   });
 }

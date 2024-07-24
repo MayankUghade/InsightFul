@@ -1,7 +1,8 @@
 "use client";
+
 import { Button } from "../ui/button";
-import { Copy, EditIcon, Globe } from "lucide-react";
-import { ImArrowUpRight, ImBin } from "react-icons/im";
+import { Copy } from "lucide-react";
+import { ImArrowUpRight } from "react-icons/im";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { Project } from "@prisma/client";
@@ -12,13 +13,27 @@ import { BiSolidDashboard } from "react-icons/bi";
 import DeleteProject from "./DeleteProject";
 import Edit from "./EditProject";
 
+interface CardProps {
+  id: string;
+  userEmail: string;
+  name: string;
+  createdAt: Date;
+  messageCount: number; // Add this prop
+}
+
 function cancelspace(name: string): string {
   return name.replace(/\s/g, "-");
 }
 
 const notify = () => toast.success("Copied to clipboard");
 
-export default function Card({ id, userEmail, name, createdAt }: Project) {
+export default function Card({
+  id,
+  userEmail,
+  name,
+  createdAt,
+  messageCount,
+}: CardProps) {
   const formattedDate = format(new Date(createdAt), "MMMM dd, yyyy");
 
   return (
@@ -59,7 +74,7 @@ export default function Card({ id, userEmail, name, createdAt }: Project) {
 
       <div className="mt-5 flex items-center gap-2">
         <GoComment className="text-xl" />
-        12 comments
+        Comments: {messageCount}
       </div>
 
       <div className="mt-3 text-sm">

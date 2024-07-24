@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import CreateProject from "./CreateProject";
 import Card from "./ProjectCard";
 import { Fetchposts } from "../Actions/FetchPosts";
@@ -9,6 +8,8 @@ import { Project } from "@prisma/client";
 export default async function Dashboard() {
   const session = await auth();
   const data = await Fetchposts();
+
+  if (!data) return <div>Project not found</div>;
 
   return (
     <div className="p-5 lg:container">
@@ -26,13 +27,14 @@ export default async function Dashboard() {
 
       <div className="mt-5 p-3 w-full flex flex-wrap items-center justify-center gap-3">
         {data.length > 0 ? (
-          data.map((item: Project) => (
+          data.map((item: any) => (
             <Card
               key={item.id}
               id={item.id}
               userEmail={item.userEmail}
-              name={item.name}
+              name={item.name as string}
               createdAt={item.createdAt}
+              messageCount={item.messages.length} // Pass the message count
             />
           ))
         ) : (
