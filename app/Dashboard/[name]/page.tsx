@@ -15,6 +15,7 @@ export default async function Page({ params }: { params: { name: string } }) {
         userEmail={data.userEmail}
         name={data.name as string}
         createdAt={data.createdAt}
+        messagescount={data.messages.length}
       />
       <div>
         <h1 className="text-xl mb-2 text-center">

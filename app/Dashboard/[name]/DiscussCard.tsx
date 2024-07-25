@@ -50,8 +50,6 @@ export default async function DiscussionCard({
           <h1 className="text-xl font-bold sm:text-lg">{item.title}</h1>
           <p className="text-muted-foreground sm:text-sm">{item.description}</p>
         </div>
-
-        <Upvote messageId={item.id} />
       </div>
 
       <div className="flex items-center justify-between">

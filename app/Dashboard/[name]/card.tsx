@@ -17,6 +17,7 @@ interface ProjectProps {
   userEmail?: string;
   name: string;
   createdAt: Date;
+  messagescount: number;
 }
 
 function cancelspace(name: string): string {
@@ -25,7 +26,13 @@ function cancelspace(name: string): string {
 
 const notify = () => toast.success("Copied to clipboard");
 
-export default function Card({ id, userEmail, name, createdAt }: ProjectProps) {
+export default function Card({
+  id,
+  userEmail,
+  name,
+  createdAt,
+  messagescount,
+}: ProjectProps) {
   const formattedDate = format(new Date(createdAt), "MMMM dd, yyyy");
 
   return (
@@ -68,7 +75,7 @@ export default function Card({ id, userEmail, name, createdAt }: ProjectProps) {
 
       <div className="mt-5 flex items-center gap-2">
         <GoComment className="text-xl" />
-        12 comments
+        Comments: {messagescount}
       </div>
 
       <div className="mt-3 text-sm">
