@@ -16,13 +16,12 @@ interface DataItem {
 interface ComponentProps {
   data: DataItem[];
 }
+const [isUpvoted, setIsUpvoted] = useState(false);
 
 export default function Component({ data }: ComponentProps) {
   return (
     <div className="p-5 rounded-lg bg-gray-900">
       {data.map((item, index) => {
-        const [isUpvoted, setIsUpvoted] = useState(false);
-
         return (
           <Card key={index} className="max-w-full p-5 flex flex-col gap-2 mt-5">
             <div className="flex items-center gap-4">
