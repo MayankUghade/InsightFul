@@ -16,12 +16,28 @@ interface DataItem {
 interface ComponentProps {
   data: DataItem[];
 }
-const [isUpvoted, setIsUpvoted] = useState(false);
 
 export default function Component({ data }: ComponentProps) {
+  // Define the state inside the component
+  const [upvotedItems, setUpvotedItems] = useState<Set<number>>(new Set());
+
+  const handleUpvote = (index: number) => {
+    setUpvotedItems((prev) => {
+      const newUpvotedItems = new Set(prev);
+      if (newUpvotedItems.has(index)) {
+        newUpvotedItems.delete(index);
+      } else {
+        newUpvotedItems.add(index);
+      }
+      return newUpvotedItems;
+    });
+  };
+
   return (
     <div className="p-5 rounded-lg bg-gray-900">
       {data.map((item, index) => {
+        const isUpvoted = upvotedItems.has(index);
+
         return (
           <Card key={index} className="max-w-full p-5 flex flex-col gap-2 mt-5">
             <div className="flex items-center gap-4">
@@ -33,7 +49,7 @@ export default function Component({ data }: ComponentProps) {
                 className={`ml-auto cursor-pointer ${
                   isUpvoted ? "text-red-500" : ""
                 }`}
-                onClick={() => setIsUpvoted(!isUpvoted)}
+                onClick={() => handleUpvote(index)}
               >
                 <ThumbsUpIcon className="w-5 h-5" />
                 <span className="sr-only">Upvote</span>
