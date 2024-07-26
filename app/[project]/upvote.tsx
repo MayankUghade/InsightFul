@@ -30,7 +30,7 @@ export default function Upvote({ messageId }: { messageId: string }) {
       return alert("Please sign in to upvote");
     } else if (session.user?.email) {
       const data = await Fetchupvotes(messageId, session.user.email);
-      if (data.upvote > 0 && data?.userEmail === session.user.email) {
+      if (data && data.upvote > 0 && data?.userEmail === session.user.email) {
         await UpdateUpvote(data.id, session.user.email, messageId, upvote - 1);
         setUpvote(upvote - 1);
       } else {
