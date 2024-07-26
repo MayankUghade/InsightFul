@@ -23,7 +23,7 @@ export default function Upvote({ messageId }: { messageId: string }) {
       }
     };
     votecount();
-  }, [messageId, session]);
+  }, [messageId]);
 
   const handleUpvote = async () => {
     if (!session) {
