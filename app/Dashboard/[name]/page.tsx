@@ -11,8 +11,6 @@ export default async function Page({ params }: { params: { name: string } }) {
 
   if (!data) return <div>Project not found</div>;
 
-  if (!session) return <div>SignUp to access this page</div>;
-
   return (
     <div className="grid lg:grid-cols-[30%_70%] gap-4 p-5 lg:container">
       <Card

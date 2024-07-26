@@ -8,10 +8,6 @@ export default async function Page({
   params: { project: string };
 }) {
   const session = await auth();
-
-  if (!session) {
-    return <div>Please sign in to view this page.</div>;
-  }
   const { project } = params;
 
   return (
