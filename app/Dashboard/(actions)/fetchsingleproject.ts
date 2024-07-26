@@ -5,18 +5,29 @@ import { MessageStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function Fetchsingleproject(name: string) {
-  return await prisma.project.findUnique({
-    where: {
-      name,
-    },
-    include: {
-      messages: {
-        include: {
-          user: true,
+  try {
+    const project = await prisma.project.findUnique({
+      where: {
+        name,
+      },
+      include: {
+        messages: {
+          include: {
+            user: true,
+          },
         },
       },
-    },
-  });
+    });
+
+    if (!project) {
+      throw new Error(`Project with name ${name} not found`);
+    }
+
+    return project;
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    throw new Error("Error fetching project");
+  }
 }
 
 export default async function Updatetags(
@@ -24,15 +35,20 @@ export default async function Updatetags(
   status: MessageStatus,
   projectName: string
 ) {
-  revalidatePath(`/Dashboard/${projectName}`);
-  revalidatePath(`/${projectName}`);
-  await prisma.message.update({
-    where: {
-      id,
-      projectname: projectName,
-    },
-    data: {
-      status,
-    },
-  });
+  try {
+    revalidatePath(`/Dashboard/${projectName}`);
+    revalidatePath(`/${projectName}`);
+
+    await prisma.message.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating message tags:", error);
+    throw new Error("Error updating message tags");
+  }
 }
