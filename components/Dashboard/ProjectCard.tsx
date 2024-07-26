@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { Copy } from "lucide-react";
+import { CopyIcon } from "lucide-react";
 import { ImArrowUpRight } from "react-icons/im";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
@@ -12,6 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { BiSolidDashboard } from "react-icons/bi";
 import DeleteProject from "./DeleteProject";
 import Edit from "./EditProject";
+import { Input } from "../ui/input";
 
 interface CardProps {
   id: string;
@@ -51,25 +52,34 @@ export default function Card({
         </div>
       </div>
 
-      <div className="w-full flex items-center gap-3 mt-4">
-        <div className="p-2 border rounded-lg sm:w-[300px] w-full overflow-hidden text-sm text-nowrap">
-          http://localhost:3000/{cancelspace(name as string)}
-        </div>
-        <Button
-          onClick={() => {
-            navigator.clipboard.writeText(
-              `http://localhost:3000/${cancelspace(name as string)}`
-            );
-            notify();
-          }}
-        >
-          <Copy />
-        </Button>
-        <Link href={`/${cancelspace(name as string)}`}>
-          <Button>
-            <ImArrowUpRight />
+      <div className="flex sm:flex-row flex-col sm:items-center space-x-2 mt-5 sm:gap-0 gap-2">
+        <Input
+          value={`https://insightful-two.vercel.app/${cancelspace(name)}`}
+          readOnly
+          className="flex-1 cursor-pointer bg-muted text-muted-foreground p-3"
+        />
+        <div className="flex items-center gap-1">
+          <Button
+            variant="outline"
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `https://insightful-two.vercel.app/${cancelspace(name)}`
+              );
+              notify();
+            }}
+          >
+            <CopyIcon className="h-5 w-5" />
           </Button>
-        </Link>
+          <Link
+            href={`https://insightful-two.vercel.app/${cancelspace(name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline">
+              <ImArrowUpRight />
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="mt-5 flex items-center gap-2">

@@ -58,7 +58,9 @@ export default function CreateProject() {
       <Dialog>
         <Toaster />
         <DialogTrigger asChild>
-          <Button>Create New Project</Button>
+          <Button>
+            <h1 className="text-sm">Create Project</h1>
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>

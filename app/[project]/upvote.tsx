@@ -23,7 +23,7 @@ export default function Upvote({ messageId }: { messageId: string }) {
       }
     };
     votecount();
-  }, [messageId]);
+  }, [messageId, session]);
 
   const handleUpvote = async () => {
     if (!session) {
@@ -43,7 +43,7 @@ export default function Upvote({ messageId }: { messageId: string }) {
 
   return (
     <div
-      className="p-3 border rounded-lg flex gap-1 cursor-pointer w-fit"
+      className="p-3 border rounded-lg flex gap-1 cursor-pointer"
       onClick={handleUpvote}
     >
       <BiSolidUpvote className="text-xl" />

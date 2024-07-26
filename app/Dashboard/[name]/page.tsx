@@ -1,12 +1,17 @@
 import { Fetchsingleproject } from "../(actions)/fetchsingleproject";
 import Card from "./card";
 import DiscussionCard from "./DiscussCard";
+import { auth } from "@/lib/auth";
 
 export default async function Page({ params }: { params: { name: string } }) {
   const { name } = params;
   const data = await Fetchsingleproject(name);
 
+  const session = await auth();
+
   if (!data) return <div>Project not found</div>;
+
+  if (!session) return <div>Project not found</div>;
 
   return (
     <div className="grid lg:grid-cols-[30%_70%] gap-4 p-5 lg:container">

@@ -13,13 +13,13 @@ export default async function Dashboard() {
 
   return (
     <div className="p-5 lg:container">
-      <h1 className="mt-3 text-center font-bold sm:text-4xl text-2xl">
+      <h1 className="mt-3 text-center font-bold sm:text-4xl text-lg">
         Welcome to InsightFul{" "}
         <span className="text-gradient-pink-purple">{session?.user?.name}</span>
       </h1>
 
       <div className="flex items-center justify-between">
-        <h1 className="mt-5 ml-3 font-semibold text-xl text-muted-foreground">
+        <h1 className="mt-5 ml-3 font-semibold sm:text-xl text-sm text-muted-foreground">
           Your projects:
         </h1>
         <CreateProject />
